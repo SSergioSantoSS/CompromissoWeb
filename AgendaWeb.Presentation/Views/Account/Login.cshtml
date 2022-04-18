@@ -1,0 +1,94 @@
+﻿@*Definindo a classe Model desta página*@
+@model AgendaWeb.Presentation.Models.AccountLoginModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+
+    <!-- Referência para os arquivos  CSS  do projeto -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+</head>
+<body class="bg-secondary">
+
+    <div class="container mt-5">
+        <div class="row">
+
+            <div class="col-md-4 offset-4">
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="text-center">
+                            <img src =" data:image/png;base64,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 "/>
+                            <h5> Projeto <strong>Agenda Web</strong></h5>
+                            <p>Acessar Conta de Usuário</p>
+                            <hr />
+                        </div>
+
+                        <div class="mb-2 text-danger">
+                            <strong>@TempData["MensagemErro"]</strong>
+                        </div>
+
+                        @*Aqui entra o conteúdo do formulário*@
+                        @using (Html.BeginForm())
+
+                                {
+                                    <label>Entre com o seu Email de acesso: </label>
+                                    @Html.TextBoxFor(model =>model.Email, 
+                                        new { @class = "form-control", @placeholder = "Digite aqui"})
+                                    <div class="text-danger">
+                                        @Html.ValidationMessageFor(model => model.Email)
+                                    </div>
+                                      <br/>
+
+                                    <label>Entre com sua senha:</label>
+                                    @Html.PasswordFor(model => model.Senha, 
+                                        new { @class = "form-control", @placeholder = "Digite aqui"})
+                                    <div class="text-danger">
+                                        @Html.ValidationMessageFor(model => model.Senha)
+                                    </div>
+                                      <br/>
+
+
+                                            <div class="d-grid">
+
+                                                <input type="submit" value="Acessar Agenda " class="btn btn-primary"/>
+
+                                            </div>   
+                                        
+                              
+                                 }       
+
+                                <div class="d-grid mt-2 ">
+                                  <a href="/Account/Register" class="btn btn-success">
+                                    Não possui conta? <strong>Cadastre-se aqui!</strong>
+                                  </a>
+                              </div>
+
+                              <div class="text-center mt-2">
+                                  <small>AgendaWeb v1.0.0</small>
+
+                              </div>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+ </div>
+
+    
+
+
+    <!-- Referência para os arquivos  JavaScript  do projeto -->
+    <script src=/js/bootstrap.min.js></script>
+</body>
+</html>

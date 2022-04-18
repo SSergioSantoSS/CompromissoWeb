@@ -1,0 +1,122 @@
+﻿@using Newtonsoft.Json
+@using AgendaWeb.Presentation.Models
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor
+
+@{
+    Layout = null;
+}
+
+@{
+    //Ler os dados do usuário gravado em sessão
+    var json = httpContextAccessor.HttpContext.Session.GetString("usuario");
+    var usuario = JsonConvert.DeserializeObject<UsuarioModel>(json); 
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AgendaWeb</title>
+
+    <!-- Referência para os arquivos  CSS  do projeto -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+
+     @*local para inserir conteúdo de outras páginas*@
+     @RenderSection("styles", required: false)
+
+</head>
+<body>
+    <!--Menu Superior-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">AgendaWeb</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/Home/Index">Página Inicial</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link " aria-current="page" href="/Usuario/MinhaConta">Minha Conta</a>
+        </li>
+           <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Gerenciar Eventos
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/Evento/Cadastrar">Cadastrar Eventos</a></li>
+            <li><a class="dropdown-item" href="/Evento/Consultar">Consultar Eventos</a></li>
+            <li><a class="dropdown-item" href="/Evento/Editar">Editar Eventos</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/Evento/Relatorio">Relatórios de Eventos</a></li>
+          </ul>
+        </li>
+        </ul>
+      <form class="d-flex">
+          <div class="text-white">
+              <div>@usuario.Nome</div>
+              <div style="margin-top: -10px!important;"><small>@usuario.Email</small></div>
+          </div>
+          &nbsp;&nbsp;&nbsp;
+       <a href="/Account/Logout" class="btn btn-outline-light"
+            onclick="return confirm('Deseja realmente encerrar essa sessão e sair do sistema?')">
+            Encerrar Sessão
+        </a>
+      </form>
+    </div>
+  </div>
+</nav>
+
+    
+    @if(TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Sucesso!</strong> @TempData["MensagemSucesso"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+    }
+
+    
+    else if(TempData["MensagemAlerta"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Alerta!</strong> @TempData["MensagemAlerta"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+    }
+
+    
+    else if(TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Erro!</strong> @TempData["MensagemErro"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+    }
+
+    <!--Corpo da página-->
+    <div class="container mt-3">
+        <div class="card card-body">
+
+           @*Definir o local onde será exibido o conteúdo das demais páginas*@
+           @RenderBody()
+
+        </div>
+    </div>
+
+
+    
+    <!-- Referência para os arquivos  JavaScript  do projeto -->
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery-3.6.0.min.js"></script>
+
+     @*local onde será exibido o conteúdo javaScript das demais páginas*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>
